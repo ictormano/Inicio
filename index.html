@@ -1,7 +1,14 @@
 <script type="text/javascript">
-    if (window.matchMedia("(max-width: 768px)").matches) {
-        window.location.href = "https://letrasuast.notion.site/letrasuast/Licenciatura-em-Letras-Mobile-3c20c5aac0df49139fcfa668f9998e95";
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        // Se for Android
+        window.location.href = "URL_da_página_para_dispositivos_móveis";
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        // Se for iPhone ou iPad
+        window.location.href = "URL_da_página_para_dispositivos_móveis_iOS";
     } else {
-        window.location.href = "https://letrasuast.notion.site/letrasuast/d2ca52cd440b47be969ed7b154bb6d92";
+        // Para outros dispositivos (Desktop, por exemplo)
+        window.location.href = "URL_da_página_para_desktops";
     }
 </script>
