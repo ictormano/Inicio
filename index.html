@@ -1,14 +1,88 @@
-<script type="text/javascript">
-    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licenciatura em Letras</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    if (/android/i.test(userAgent)) {
-        // Se for Android
-        window.location.href = "https://letrasuast.notion.site/letrasuast/Licenciatura-em-Letras-Mobile-3c20c5aac0df49139fcfa668f9998e95";
-    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        // Se for iPhone ou iPad
-        window.location.href = "https://letrasuast.notion.site/letrasuast/Licenciatura-em-Letras-Mobile-3c20c5aac0df49139fcfa668f9998e95";
-    } else {
-        // Para outros dispositivos (Desktop, por exemplo)
-        window.location.href = "https://letrasuast.notion.site/letrasuast/d2ca52cd440b47be969ed7b154bb6d92";
-    }
-</script>
+        #loading {
+            display: none;
+            position: absolute;
+            top: 70%; /* Ajuste a porcentagem para definir a posição vertical */
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #identification {
+            font-size: 24px;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            text-align: justify; /* Justifica o texto */
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+
+    <p id="identification">IDENTIFICANDO SEU DISPOSITIVO, AGUARDE, EM BREVE VOCÊ SERÁ REDIRECIONADO...</p>
+
+    <script type="text/javascript">
+        // Mostra a animação de carregamento
+        document.getElementById('loading').style.display = 'block';
+
+        setTimeout(function() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            var deviceType;
+
+            if (/android/i.test(userAgent)) {
+                deviceType = "Android";
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                deviceType = "iPhone/iPad";
+            } else {
+                deviceType = "computador";
+            }
+
+            // Atualiza o texto com o tipo de dispositivo
+            document.getElementById('identification').innerHTML = "Você está navegando em um " + deviceType + ". Redirecionando...";
+
+            setTimeout(function() {
+                if (/android/i.test(userAgent)) {
+                    // Se for Android
+                    window.location.href = "https://letrasuast.notion.site/letrasuast/Licenciatura-em-Letras-Mobile-3c20c5aac0df49139fcfa668f9998e95";
+                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    // Se for iPhone ou iPad
+                    window.location.href = "https://letrasuast.notion.site/letrasuast/Licenciatura-em-Letras-Mobile-3c20c5aac0df49139fcfa668f9998e95";
+                } else {
+                    // Para outros dispositivos (Desktop, por exemplo)
+                    window.location.href = "https://letrasuast.notion.site/Licenciatura-em-Letras-d2ca52cd440b47be969ed7b154bb6d92";
+                }
+            }, 2000); // Redireciona após 2 segundos
+        }, 2000); // Aguarda 2 segundos antes de mostrar o tipo de dispositivo
+    </script>
+</body>
+</html>
