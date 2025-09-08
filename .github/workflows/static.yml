@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .time {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .date {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .search-section {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 50px;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .search-container {
+            position: relative;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            animation: slideUp 0.8s ease-out 0.4s both;
+        }
+
+        .link-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-item:hover::before {
+            left: 100%;
+        }
+
+        .link-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .link-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .weather {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .time {
+                font-size: 3rem;
+            }
+            
+            .quick-links {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            
+            .weather {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 30px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="weather" id="weather">
+            <div>🌤️ Carregando...</div>
+        </div>
+
+        <div class="time-section">
+            <div class="time" id="time">00:00</div>
+            <div class="date" id="date">Carregando...</div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar no Google..." autocomplete="off">
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <a href="https://gmail.com" class="link-item">
+                <span class="link-icon">📧</span>
+                <span class="link-name">Gmail</span>
+            </a>
+            <a href="https://youtube.com" class="link-item">
+                <span class="link-icon">📺</span>
+                <span class="link-name">YouTube</span>
+            </a>
+            <a href="https://github.com" class="link-item">
+                <span class="link-icon">💻</span>
+                <span class="link-name">GitHub</span>
+            </a>
+            <a href="https://drive.google.com" class="link-item">
+                <span class="link-icon">📁</span>
+                <span class="link-name">Drive</span>
+            </a>
+            <a href="https://netflix.com" class="link-item">
+                <span class="link-icon">🎬</span>
+                <span class="link-name">Netflix</span>
+            </a>
+            <a href="https://twitter.com" class="link-item">
+                <span class="link-icon">🐦</span>
+                <span class="link-name">Twitter</span>
+            </a>
+            <a href="https://linkedin.com" class="link-item">
+                <span class="link-icon">💼</span>
+                <span class="link-name">LinkedIn</span>
+            </a>
+            <a href="https://instagram.com" class="link-item">
+                <span class="link-icon">📷</span>
+                <span class="link-name">Instagram</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Atualizar hora
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const dateStr = now.toLocaleDateString('pt-BR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('time').textContent = timeStr;
+            document.getElementById('date').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+        }
+
+        // Pesquisa no Google
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+
+        // Foco automático na pesquisa
+        document.addEventListener('keydown', function(e) {
+            if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                document.getElementById('searchInput').focus();
+            }
+        });
+
+        // Clima simples
+        function updateWeather() {
+            const weather = document.getElementById('weather');
+            const hour = new Date().getHours();
+            
+            if (hour >= 6 && hour < 12) {
+                weather.innerHTML = '<div><i class="fas fa-sun" style="margin-right: 8px; color: white;"></i>Bom dia!</div>';
+            } else if (hour >= 12 && hour < 18) {
+                weather.innerHTML = '<div><i class="fas fa-sun" style="margin-right: 8px; color: white;"></i>Boa tarde!</div>';
+            } else {
+                weather.innerHTML = '<div><i class="fas fa-moon" style="margin-right: 8px; color: white;"></i>Boa noite!</div>';
+            }
+        }
+
+        // Partículas flutuantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 7000);
+            }, 300);
+        }
+
+        // Clima simples
+        function updateWeather() {
+            const weather = document.getElementById('weather');
+            const hour = new Date().getHours();
+            
+            if (hour >= 6 && hour < 12) {
+                weather.innerHTML = '<div>🌅 Bom dia!</div>';
+            } else if (hour >= 12 && hour < 18) {
+                weather.innerHTML = '<div>☀️ Boa tarde!</div>';
+            } else {
+                weather.innerHTML = '<div>🌙 Boa noite!</div>';
+            }
+        }
+
+        // Inicializar
+        updateTime();
+        updateWeather();
+        updateDailyQuote();
+        updateProgress();
+        updateUsefulInfo();
+        createParticles();
+        
+        setInterval(updateTime, 1000);
+        setInterval(updateProgress, 60000); // Atualiza progresso a cada minuto
+        
+        // Event listeners para o timer
+        document.getElementById('startBtn').addEventListener('click', startTimer);
+        document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
+        document.getElementById('resetBtn').addEventListener('click', resetTimer);
+        
+        // Foco inicial
+        setTimeout(() => {
+            document.getElementById('searchInput').focus();
+        }, 500);
+    </script>
+</body>
+</html>
